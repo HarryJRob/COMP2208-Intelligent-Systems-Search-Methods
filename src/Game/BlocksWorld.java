@@ -1,3 +1,4 @@
+package Game;
 import java.util.List;
 
 public class BlocksWorld {
@@ -7,46 +8,14 @@ public class BlocksWorld {
 	
 	private final int size;
 	private Character[][] board;
+	private Character[][] solution;
 	private int agentX;
 	private int agentY;
 	
-	public BlocksWorld(int size, int agentX, int agentY, List<Integer> tilesX, List<Integer> tilesY) throws Exception {
-		//Error Checking
-		if (tilesX.size() != tilesY.size() || !(agentY >= 0 && agentY < size && agentX >= 0 && agentX < size)) {
-			throw new Exception("Input arguments invalid");
-		}
-		
-		//Create the Board
-		this.size = size;
-		board = new Character[this.size][this.size];
-		for(int curY = 0; curY < this.size; curY++) {
-			for(int curX = 0; curX < this.size; curX++) {
-				board[curY][curX] = ' ';
-			}
-		}
-		
-		//Create the agent
-		this.agentX = agentX;
-		this.agentY = agentY;
-		board[this.agentY][this.agentX] = AGENT_REPRESENTATION;
-		
-		//Create the tiles
-		for(int i = 0; i < tilesX.size(); i++) {
-			int curX = tilesX.get(i);
-			int curY = tilesY.get(i);
-			
-			if(!(curX >= 0 && curX < size && curY >= 0 && curY < size) && board[curX][curY] != ' ') {
-				throw new Exception("Input tiles contain an error");
-			}
-			
-			board[curY][curX] = TILE_REPRESENTATION;
-		}
-		System.out.println("Hello, World");
-	}
-	
-	public BlocksWorld(Character[][] board) {
+	public BlocksWorld(Character[][] board, Character[][] solution) {
 		this.size = board.length;
 		this.board = board;
+		this.solution = solution;
 		for(int y = 0; y < this.size; y++) {
 			for(int x = 0; x < this.size; x++) {
 				if(this.board[y][x] == AGENT_REPRESENTATION) {
@@ -58,7 +27,7 @@ public class BlocksWorld {
 		}
 	}
 	
-	public void swapChars(int destX, int destY) {
+	private void swapChars(int destX, int destY) {
 		board[agentY][agentX] = board[destY][destX];
 		agentX = destX;
 		agentY = destY;
@@ -105,5 +74,18 @@ public class BlocksWorld {
 			System.out.println('|');
 		}
 	}
-	
+
+	public boolean isComplete() {
+		board[agentY][agentX] = ' ';
+		for(int y = 0; y < size; y++) {
+			for(int x = 0; x < size; x++) {
+				if(board[y][x] != solution[y][x]) {
+					board[agentY][agentX] = '@';
+					return false;
+				}
+			}
+		}
+		board[agentX][agentY] = '@';
+		return true;
+	}
 }
