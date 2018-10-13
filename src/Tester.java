@@ -1,56 +1,29 @@
 import Game.*;
+import SearchMethods.*;
 public class Tester {
 
 	public static void main(String[] args) throws Exception {
 		
-		Character[][] InitialState = { 
+		char[][] InitialState = { 
 								{' ', ' ', ' ', ' '},
 								{' ', ' ', ' ', ' '},
 								{' ', ' ', ' ', ' '},
 								{'A', 'B', 'C', '@'}};
 		
-		Character[][] FinalState = {
+		char[][] FinalState = {
 								{' ', ' ', ' ', ' '},
-								{' ', 'A', ' ', ' '},
-								{' ', 'B', ' ', ' '},
-								{' ', 'C', ' ', ' '}};
+								{' ', ' ', ' ', ' '},
+								{' ', ' ', 'A', ' '},
+								{' ', ' ', 'B', 'C'}};
 
 		BlocksWorld b = new BlocksWorld(InitialState, FinalState);
 
-		b.printBoard();
-		b.moveUp();
-		b.moveLeft();
-		b.moveLeft();
-		b.moveLeft();
-		b.moveDown();	
-		b.moveRight();
-		b.moveRight();	
-		b.moveUp();
-		b.moveLeft();
-		b.moveLeft();	
-		b.moveDown();
-		b.moveRight();
-		b.moveRight();
-		b.moveUp();
-		b.moveUp();
-		b.moveLeft();
-		b.moveDown();
-		b.moveLeft();
-		b.moveUp();
-		b.moveUp();
-		b.moveRight();
-		b.moveRight();
-		b.moveDown();
-		b.moveDown();
-		b.moveDown();
-		b.moveLeft();
-		b.moveLeft();
-		b.moveUp();
-		b.printBoard();	
+		System.out.println("Breadth First");
+		b.resetBoard();
 
-		System.out.println(b.isComplete());
-		
-		
+		String s = new BreadthSearch().SolveBlocksWorld(b);
+
+		System.out.println(s);
 	}
 
 }

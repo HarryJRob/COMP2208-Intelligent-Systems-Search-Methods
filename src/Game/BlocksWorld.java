@@ -1,26 +1,33 @@
 package Game;
-import java.util.List;
+import java.util.Arrays;
 
 public class BlocksWorld {
 
 	private final char AGENT_REPRESENTATION = '@';
-	private final char TILE_REPRESENTATION = 'T';
 	
 	private final int size;
-	private Character[][] board;
-	private Character[][] solution;
+	private final char[][] initialBoard;
+	private final char[][] solution;
+	private char[][] board;
+
+	private int initialAgentX;
+	private int initialAgentY;
 	private int agentX;
 	private int agentY;
 	
-	public BlocksWorld(Character[][] board, Character[][] solution) {
-		this.size = board.length;
-		this.board = board;
+	public BlocksWorld(char[][] initialBoard, char[][] solution) {
+		this.size = initialBoard.length;
+		this.initialBoard = initialBoard;
 		this.solution = solution;
+		this.board = copyBoard(initialBoard);
+
 		for(int y = 0; y < this.size; y++) {
 			for(int x = 0; x < this.size; x++) {
 				if(this.board[y][x] == AGENT_REPRESENTATION) {
 					agentX = x;
 					agentY = y;
+					initialAgentX = agentX;
+					initialAgentY = agentY;
 					return;
 				}
 			}
@@ -87,5 +94,19 @@ public class BlocksWorld {
 		}
 		board[agentX][agentY] = '@';
 		return true;
+	}
+
+	public void resetBoard() {
+		agentX = initialAgentX;
+		agentY = initialAgentY;
+		this.board = copyBoard(initialBoard);
+	}
+
+	private char[][] copyBoard(char[][] original) {
+		final char[][] result = new char[original.length][];
+		for(int i = 0; i < original.length; i++) {
+			result[i] = Arrays.copyOf(original[i], original[i].length);
+		}
+		return result;
 	}
 }
