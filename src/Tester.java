@@ -4,17 +4,17 @@ public class Tester {
 
 	public static void main(String[] args) throws Exception {
 		
-		char[][] InitialState = { 
+		char[][] InitialState = {
 								{' ', ' ', ' ', ' '},
 								{' ', ' ', ' ', ' '},
 								{' ', ' ', ' ', ' '},
-								{'A', 'B', 'C', '@'}};
+								{'A', 'B', 'C', ' '}};
 		
 		char[][] FinalState = {
 								{' ', ' ', ' ', ' '},
-								{' ', ' ', ' ', ' '},
-								{' ', ' ', 'A', ' '},
-								{' ', ' ', 'B', 'C'}};
+								{' ', 'A', ' ', ' '},
+								{' ', 'B', ' ', ' '},
+								{' ', 'C', ' ', '@'}};
 
 		BlocksWorld b = new BlocksWorld(InitialState, FinalState);
 
@@ -23,7 +23,7 @@ public class Tester {
 
 		String s = new BreadthSearch().SolveBlocksWorld(b);
 
-		System.out.println(s);
+		System.out.println("Solution: \"" + s + "\"");
 	}
 
 }

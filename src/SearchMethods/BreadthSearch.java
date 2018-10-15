@@ -7,29 +7,23 @@ public final class BreadthSearch extends Search {
 
     @Override
     public String SolveBlocksWorld(BlocksWorld b) {
-        Queue<Node<String>> toExpand = new LinkedList<Node<String>>();
-        toExpand.add(new Node<String>(""));
+        Queue<String> toExpand = new LinkedList<String>();
+        toExpand.add("");
 
         while(toExpand.size() != 0) {
-            Node<String> curNode = toExpand.remove();
-            if(playGame(b, curNode.getValue())) {
-                return curNode.getValue();
+            String curNode = toExpand.remove();
+            //System.out.println("Expanding: " + curNode);
+            
+            if(playGame(b, curNode)) {
+                return curNode;
             } else {
-                expandNode(curNode);
-                for(Node<String> n : curNode.getChildren()) {
-                    toExpand.add(n);
-                }
+                toExpand.add(curNode+"w");
+                toExpand.add(curNode+"s");
+                toExpand.add(curNode+"a");
+                toExpand.add(curNode+"d");
             }
         }
         return null;
-    }
-
-    private void expandNode(Node<String> n) {
-        String s = n.getValue();
-        n.addChild(new Node<String>(s+"w"));
-        n.addChild(new Node<String>(s+"s"));
-        n.addChild(new Node<String>(s+"a"));
-        n.addChild(new Node<String>(s+"d"));
     }
 
 }
