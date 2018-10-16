@@ -12,7 +12,7 @@
             "console": "internalConsole",
             "stopOnEntry": false,
             "mainClass": "",
-            "args": ""
+            "args": "-Xmx12288 -Xms1024"
         },
         {
             "type": "java",
@@ -22,7 +22,7 @@
             "console": "internalConsole",
             "stopOnEntry": false,
             "mainClass": "Tester",
-            "args": "",
+            "args": "-Xmx12288 -Xms1024",
             "projectName": "COMP2208-Intelligent-Systems-Search-Methods"
         },
         {

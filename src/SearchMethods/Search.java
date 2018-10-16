@@ -3,9 +3,10 @@ import Game.BlocksWorld;
 
 public abstract class Search {
 
-    public abstract String SolveBlocksWorld(BlocksWorld b);
+    public abstract String solveBlocksWorld(BlocksWorld b);
 
     protected static boolean playGame(BlocksWorld b, String moves) {
+        b.resetBoard();
         for(char c : moves.toCharArray()) {
             switch (c) {
                 case 'w':
@@ -22,9 +23,8 @@ public abstract class Search {
                     break;
             }
         }
-        boolean isComplete = b.isComplete();
-        b.resetBoard();
-        return isComplete;
+        
+        return b.isComplete();
     }
 
 }

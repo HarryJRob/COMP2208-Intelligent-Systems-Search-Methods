@@ -1,5 +1,6 @@
 package Game;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 public class BlocksWorld {
 
@@ -9,6 +10,7 @@ public class BlocksWorld {
 	private final char[][] initialBoard;
 	private final char[][] solution;
 	private char[][] board;
+	private LinkedList<Integer> blockLocations;
 
 	private int initialAgentX;
 	private int initialAgentY;
@@ -21,6 +23,18 @@ public class BlocksWorld {
 		this.solution = solution;
 		this.board = copyBoard(initialBoard);
 
+		//Find the blocks in the solution
+		this.blockLocations = new LinkedList<Integer>();
+		for(int y = 0; y < this.size; y++) {
+			for(int x = 0; x < this.size; x++) {
+				if(this.solution[y][x] != ' ' && this.solution[y][x] != AGENT_REPRESENTATION) {
+					blockLocations.add(y);
+					blockLocations.add(x);
+				}
+			}
+		}
+
+		//Find the agent
 		for(int y = 0; y < this.size; y++) {
 			for(int x = 0; x < this.size; x++) {
 				if(this.board[y][x] == AGENT_REPRESENTATION) {
@@ -83,16 +97,13 @@ public class BlocksWorld {
 	}
 
 	public boolean isComplete() {
-		board[agentY][agentX] = ' ';
-		for(int y = 0; y < size; y++) {
-			for(int x = 0; x < size; x++) {
-				if(board[y][x] != solution[y][x]) {
-					board[agentY][agentX] = '@';
-					return false;
-				}
+		for(int curBlock = 0; curBlock < blockLocations.size(); curBlock+=2) {
+			int blockY = blockLocations.get(curBlock);
+			int blockX = blockLocations.get(curBlock+1);
+			if(board[blockY][blockX] != solution[blockY][blockX]) {
+				return false;
 			}
 		}
-		board[agentX][agentY] = '@';
 		return true;
 	}
 

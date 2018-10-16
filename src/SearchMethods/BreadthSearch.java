@@ -6,13 +6,12 @@ import java.util.LinkedList;
 public final class BreadthSearch extends Search {
 
     @Override
-    public String SolveBlocksWorld(BlocksWorld b) {
+    public String solveBlocksWorld(BlocksWorld b) {
         Queue<String> toExpand = new LinkedList<String>();
         toExpand.add("");
 
         while(toExpand.size() != 0) {
             String curNode = toExpand.remove();
-            //System.out.println("Expanding: " + curNode);
             
             if(playGame(b, curNode)) {
                 return curNode;
