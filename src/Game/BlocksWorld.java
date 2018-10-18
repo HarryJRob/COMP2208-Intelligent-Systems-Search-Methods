@@ -1,6 +1,7 @@
 package Game;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 public class BlocksWorld {
 
@@ -10,7 +11,7 @@ public class BlocksWorld {
 	private final char[][] initialBoard;
 	private final char[][] solution;
 	private char[][] board;
-	private LinkedList<Integer> blockLocations;
+	private List<Integer> endBlockLocations;
 
 	private int initialAgentX;
 	private int initialAgentY;
@@ -24,12 +25,12 @@ public class BlocksWorld {
 		this.board = copyBoard(initialBoard);
 
 		//Find the blocks in the solution
-		this.blockLocations = new LinkedList<Integer>();
+		this.endBlockLocations = new LinkedList<Integer>();
 		for(int y = 0; y < this.size; y++) {
 			for(int x = 0; x < this.size; x++) {
 				if(this.solution[y][x] != ' ' && this.solution[y][x] != AGENT_REPRESENTATION) {
-					blockLocations.add(y);
-					blockLocations.add(x);
+					endBlockLocations.add(y);
+					endBlockLocations.add(x);
 				}
 			}
 		}
@@ -97,9 +98,9 @@ public class BlocksWorld {
 	}
 
 	public boolean isComplete() {
-		for(int curBlock = 0; curBlock < blockLocations.size(); curBlock+=2) {
-			int blockY = blockLocations.get(curBlock);
-			int blockX = blockLocations.get(curBlock+1);
+		for(int curBlock = 0; curBlock < endBlockLocations.size(); curBlock+=2) {
+			int blockY = endBlockLocations.get(curBlock);
+			int blockX = endBlockLocations.get(curBlock+1);
 			if(board[blockY][blockX] != solution[blockY][blockX]) {
 				return false;
 			}

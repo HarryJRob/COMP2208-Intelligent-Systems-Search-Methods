@@ -14,20 +14,26 @@ public class AStarSearch extends Search {
         toExpand.add(new Node("", 0));
 
         while(toExpand.size() != 0) {
-           Node curNode = toExpand.poll();
+            Node curNode = toExpand.poll();
 
-           if(playGame(b, curNode.getValue())) {
-
-           } else {
-               
-           }
+            if(playGame(b, curNode.getValue())) {
+                return curNode.getValue();
+            } else {
+                toExpand.add(new Node(curNode.getValue() + "w", applyHeuristic(b,curNode.getValue() + "w")));
+                toExpand.add(new Node(curNode.getValue() + "a", applyHeuristic(b,curNode.getValue() + "a")));
+                toExpand.add(new Node(curNode.getValue() + "s", applyHeuristic(b,curNode.getValue() + "s")));
+                toExpand.add(new Node(curNode.getValue() + "d", applyHeuristic(b,curNode.getValue() + "d")));
+            }
         }
 
         return null;
     }
 
-    private int applyHeuristic() {
-        return -1;
+    private int applyHeuristic(BlocksWorld b, String moves) {
+        int distanceFromStart = moves.length() - 1;
+        int aproxDistanceToEnd = 0;
+
+        return distanceFromStart + aproxDistanceToEnd;
     }
 
     private class Node {
