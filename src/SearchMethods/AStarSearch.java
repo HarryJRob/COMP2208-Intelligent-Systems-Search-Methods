@@ -2,8 +2,10 @@ package SearchMethods;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.LinkedList;
+import java.util.List;
 
-import Game.BlocksWorld;
+import Game.*;
 
 public class AStarSearch extends Search {
 
@@ -15,6 +17,8 @@ public class AStarSearch extends Search {
 
         while(toExpand.size() != 0) {
             Node curNode = toExpand.poll();
+
+            System.out.println("Expanding: \n" + curNode.value + "\n" + curNode.priority);
 
             if(playGame(b, curNode.getValue())) {
                 return curNode.getValue();
@@ -29,18 +33,49 @@ public class AStarSearch extends Search {
         return null;
     }
 
-    private int applyHeuristic(BlocksWorld b, String moves) {
+    private float applyHeuristic(BlocksWorld b, String moves) {
         int distanceFromStart = moves.length() - 1;
-        int aproxDistanceToEnd = 0;
+        float aproxDistanceToEnd = calcAproxDistanceToEnd(b, moves);
 
         return distanceFromStart + aproxDistanceToEnd;
+
+
+    }
+
+    private float calcAproxDistanceToEnd(BlocksWorld b, String moves) {
+            playGame(b, moves);
+            char[][] currentBoard = b.getBoard();
+
+            List<Block> currentBlockLocations = new LinkedList<Block>();
+
+            for(int y = 0; y < currentBoard.length; y++) {
+                for(int x = 0; x < currentBoard[y].length; x++) {
+                    if(currentBoard[y][x] != ' ' && currentBoard[y][x] != b.AGENT_REPRESENTATION) {
+                        currentBlockLocations.add(new Block(x,y,currentBoard[y][x]));
+                    }
+                }
+            }
+
+            List<Block> finaBlockLocations = b.getSolution();
+            int returnValue = 0;
+
+            for(Block endBlock : finaBlockLocations) {
+                for(Block startBlock : currentBlockLocations) {
+                    if(endBlock.getVal() == startBlock.getVal()) {
+                        returnValue += (float) Math.sqrt((endBlock.getX() - startBlock.getX())^2 + (endBlock.getY() - startBlock.getY())^2);
+                        break;
+                    }
+                }
+            }
+
+            return returnValue;
     }
 
     private class Node {
         private String value;
-        private int priority;
+        private float priority;
 
-        public Node(String value, int priority) {
+        public Node(String value, float priority) {
             this.value = value;
             this.priority = priority;
         }
@@ -49,7 +84,7 @@ public class AStarSearch extends Search {
             return value;
         }
 
-        public int getPriority() {
+        public float getPriority() {
             return priority;
         }
     }

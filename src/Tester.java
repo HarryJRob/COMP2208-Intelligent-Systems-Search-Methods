@@ -3,7 +3,7 @@ import SearchMethods.*;
 public class Tester {
 
 	public static void main(String[] args) throws Exception {
-		
+
 		char[][] InitialState = {
 								{' ', ' ', ' ', ' '},
 								{' ', ' ', ' ', ' '},
