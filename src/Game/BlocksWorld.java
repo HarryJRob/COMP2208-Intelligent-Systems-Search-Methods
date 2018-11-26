@@ -11,6 +11,7 @@ public class BlocksWorld {
 	private final char[][] initialBoard;
 	private final char[][] solution;
 	private char[][] board;
+
 	private List<Block> endBlockLocations;
 
 	private int initialAgentX;
@@ -127,5 +128,13 @@ public class BlocksWorld {
 
 	public List<Block> getSolution() {
 		return endBlockLocations;
+	}
+
+	public int getAgentX() {
+		return agentX;
+	}
+
+	public int getAgentY() {
+		return agentY;
 	}
 }

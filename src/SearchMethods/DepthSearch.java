@@ -3,7 +3,7 @@ import Game.BlocksWorld;
 
 import java.util.Collections;
 import java.util.Stack;
-import java.util.LinkedList;
+import java.util.List;
 
 public class DepthSearch extends Search {
 
@@ -17,13 +17,9 @@ public class DepthSearch extends Search {
             if(playGame(b, curNode)) {
                 return curNode;
             } else {
-                LinkedList<String> successors = new LinkedList<String>();
-                successors.add(curNode+"w");
-                successors.add(curNode+"s");
-                successors.add(curNode+"a");
-                successors.add(curNode+"d");
-                Collections.shuffle(successors);
-                toExpand.addAll(successors);
+                List<String> nodes = getPossibleMoves(b,curNode);
+                Collections.shuffle(nodes);
+                toExpand.addAll(nodes);
             }
         }
         return null;

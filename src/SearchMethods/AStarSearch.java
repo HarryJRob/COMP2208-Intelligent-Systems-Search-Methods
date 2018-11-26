@@ -12,8 +12,6 @@ public class AStarSearch extends Search {
     @Override
     public String solveBlocksWorld(BlocksWorld b) {
         PriorityQueue<Node> toExpand = new PriorityQueue<Node>(new NodeComparator());
-
-
         toExpand.add(new Node("", 0));
 
         while(toExpand.size() != 0) {
@@ -21,11 +19,13 @@ public class AStarSearch extends Search {
 
             if(playGame(b, curNode.getValue())) {
                 return curNode.getValue();
+                
             } else {
-                toExpand.add(new Node(curNode.getValue() + "w", applyHeuristic(b,curNode.getValue() + "w")));
-                toExpand.add(new Node(curNode.getValue() + "a", applyHeuristic(b,curNode.getValue() + "a")));
-                toExpand.add(new Node(curNode.getValue() + "s", applyHeuristic(b,curNode.getValue() + "s")));
-                toExpand.add(new Node(curNode.getValue() + "d", applyHeuristic(b,curNode.getValue() + "d")));
+                List<String> nodes = getPossibleMoves(b,curNode.getValue());
+
+                for(String s : nodes) {
+                    toExpand.add(new Node(s, applyHeuristic(b, s)));
+                }
             }
         }
 
