@@ -13,12 +13,11 @@ public class AStarSearch extends Search {
     public String solveBlocksWorld(BlocksWorld b) {
         PriorityQueue<Node> toExpand = new PriorityQueue<Node>(new NodeComparator());
 
+
         toExpand.add(new Node("", 0));
 
         while(toExpand.size() != 0) {
             Node curNode = toExpand.poll();
-
-            System.out.println("Expanding: \n" + curNode.value + "\n" + curNode.priority);
 
             if(playGame(b, curNode.getValue())) {
                 return curNode.getValue();
@@ -33,16 +32,14 @@ public class AStarSearch extends Search {
         return null;
     }
 
-    private float applyHeuristic(BlocksWorld b, String moves) {
-        int distanceFromStart = moves.length() - 1;
-        float aproxDistanceToEnd = calcAproxDistanceToEnd(b, moves);
+    private int applyHeuristic(BlocksWorld b, String moves) {
+        int distanceFromStart = moves.length();
+        int aproxDistanceToEnd = calcAproxDistanceToEnd(b, moves);
 
         return distanceFromStart + aproxDistanceToEnd;
-
-
     }
 
-    private float calcAproxDistanceToEnd(BlocksWorld b, String moves) {
+    private int calcAproxDistanceToEnd(BlocksWorld b, String moves) {
             playGame(b, moves);
             char[][] currentBoard = b.getBoard();
 
@@ -62,7 +59,9 @@ public class AStarSearch extends Search {
             for(Block endBlock : finaBlockLocations) {
                 for(Block startBlock : currentBlockLocations) {
                     if(endBlock.getVal() == startBlock.getVal()) {
-                        returnValue += (float) Math.sqrt((endBlock.getX() - startBlock.getX())^2 + (endBlock.getY() - startBlock.getY())^2);
+                        int dist = (int) (Math.pow(endBlock.getX() - startBlock.getX(), 2) + Math.pow(endBlock.getY() - startBlock.getY(), 2));
+                        returnValue += dist;
+                        currentBlockLocations.remove(startBlock);
                         break;
                     }
                 }
@@ -73,9 +72,9 @@ public class AStarSearch extends Search {
 
     private class Node {
         private String value;
-        private float priority;
+        private int priority;
 
-        public Node(String value, float priority) {
+        public Node(String value, int priority) {
             this.value = value;
             this.priority = priority;
         }

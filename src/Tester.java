@@ -1,5 +1,6 @@
 import Game.*;
 import SearchMethods.*;
+
 public class Tester {
 
 	public static void main(String[] args) throws Exception {
@@ -14,7 +15,7 @@ public class Tester {
 								{' ', ' ', ' ', ' '},
 								{' ', 'A', ' ', ' '},
 								{' ', 'B', ' ', ' '},
-								{' ', 'C', ' ', '@'}};
+								{' ', 'C', ' ', ' '}};
 
 		BlocksWorld b = new BlocksWorld(InitialState, FinalState);
 		String solution;
