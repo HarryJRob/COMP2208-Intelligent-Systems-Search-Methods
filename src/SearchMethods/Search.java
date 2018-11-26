@@ -5,6 +5,8 @@ import java.util.LinkedList;
 
 public abstract class Search {
 
+    private int numberOfNodesExpanded = 0; 
+
     public abstract String solveBlocksWorld(BlocksWorld b);
 
     protected static boolean playGame(BlocksWorld b, String moves) {
@@ -29,7 +31,9 @@ public abstract class Search {
         return b.isComplete();
     }
 
-    protected static List<String> getPossibleMoves(BlocksWorld b, String curMoves) {
+    protected List<String> getPossibleMoves(BlocksWorld b, String curMoves) {
+        numberOfNodesExpanded++;
+
         char[][] board = b.getBoard();
         int agentX = b.getAgentX();
         int agentY = b.getAgentY();
@@ -56,6 +60,10 @@ public abstract class Search {
         }
         
         return returnList;
+    }
+
+    public int getNumNodesExpanded() {
+        return numberOfNodesExpanded;
     }
 
 }

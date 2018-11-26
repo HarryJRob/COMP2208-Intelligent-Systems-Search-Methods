@@ -31,11 +31,14 @@ public class Tester {
 		if(doBFS) {
 			try {
 				System.out.println("Breadth First");
+				BreadthSearch bfs = new BreadthSearch();
+
 				long currentTime = System.currentTimeMillis();
-				solution = new BreadthSearch().solveBlocksWorld(b);
+				solution = bfs.solveBlocksWorld(b);
 				long finishTime = System.currentTimeMillis();
+
 				b.printBoard();
-				System.out.println("Solution: \"" + solution + "\", \nTime Taken: " + (finishTime - currentTime) + " ms");
+				System.out.println("Solution: \"" + solution + "\", \nTime Taken: " + (finishTime - currentTime) + " ms,\nNodes Expanded: " + bfs.getNumNodesExpanded());
 			} catch (OutOfMemoryError e) {
 				System.out.println(e.toString());
 			}
@@ -44,11 +47,14 @@ public class Tester {
 		if(doDFS) {
 			try {
 				System.out.println("Depth First");
+				DepthSearch dfs = new DepthSearch();
+
 				long currentTime = System.currentTimeMillis();
-				solution = new DepthSearch().solveBlocksWorld(b);
+				solution = dfs.solveBlocksWorld(b);
 				long finishTime = System.currentTimeMillis();
+
 				b.printBoard();
-				System.out.println("Solution: \"" + solution + "\", \nTime Taken: " + (finishTime - currentTime) + " ms");
+				System.out.println("Solution: \"" + solution + "\", \nTime Taken: " + (finishTime - currentTime) + " ms,\nNodes Expanded: " + dfs.getNumNodesExpanded());
 			} catch (OutOfMemoryError e) {
 				System.out.println(e.toString());
 			}
@@ -56,20 +62,26 @@ public class Tester {
 
 		if(doIDS) {
 			System.out.println("Iterative Deepening Search");
+			IterativeDeepeningSearch ids = new IterativeDeepeningSearch();
+
 			long currentTime = System.currentTimeMillis();
-			solution = new IterativeDeepeningSearch().solveBlocksWorld(b);
+			solution = ids.solveBlocksWorld(b);
 			long finishTime = System.currentTimeMillis();
+
 			b.printBoard();
-			System.out.println("Solution: \"" + solution + "\", \nTime Taken: " + (finishTime - currentTime) + " ms");
+			System.out.println("Solution: \"" + solution + "\", \nTime Taken: " + (finishTime - currentTime) + " ms,\nNodes Expanded: " + ids.getNumNodesExpanded());
 		}
 
 		if(doAStar) {
 			System.out.println("A* Search");
+			AStarSearch ass = new AStarSearch(); 
+
 			long currentTime = System.currentTimeMillis();
-			solution = new AStarSearch().solveBlocksWorld(b);
+			solution = ass.solveBlocksWorld(b);
 			long finishTime = System.currentTimeMillis();
+
 			b.printBoard();
-			System.out.println("Solution: \"" + solution + "\", \nTime Taken: " + (finishTime - currentTime) + " ms");
+			System.out.println("Solution: \"" + solution + "\", \nTime Taken: " + (finishTime - currentTime) + " ms,\nNodes Expanded: " + ass.getNumNodesExpanded());
 		}
 	}
 
