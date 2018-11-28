@@ -11,7 +11,12 @@ public final class BreadthSearch extends Search {
         toExpand.add("");
 
         while(toExpand.size() != 0) {
+            if(toExpand.size() > mostNodesStored) {
+                mostNodesStored = toExpand.size();
+            }
+
             String curNode = toExpand.remove();
+            //System.out.println("Expanding: " + curNode);
             if(playGame(b, curNode)) {
                 return curNode;
             } else {

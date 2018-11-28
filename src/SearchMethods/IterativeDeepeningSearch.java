@@ -2,8 +2,6 @@ package SearchMethods;
 
 import Game.BlocksWorld;
 import java.util.Stack;
-import java.util.List;
-import java.util.Collections;
 
 public class IterativeDeepeningSearch extends Search {
 
@@ -28,6 +26,10 @@ public class IterativeDeepeningSearch extends Search {
         toExpand.add("");
 
         while(toExpand.size() != 0) {
+            if(toExpand.size() > mostNodesStored) {
+                mostNodesStored = toExpand.size();
+            }
+
             String curNode = toExpand.pop();
 
             if(playGame(b, curNode)) {
@@ -35,9 +37,7 @@ public class IterativeDeepeningSearch extends Search {
 
             } else {
                 if(curNode.length() < n) {
-                    List<String> nodes = getPossibleMoves(b,curNode);
-                    Collections.shuffle(nodes);
-                    toExpand.addAll(nodes);
+                    toExpand.addAll(getPossibleMoves(b,curNode));
                 }
             }
         }

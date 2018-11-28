@@ -11,26 +11,105 @@ public class Tester {
 		boolean doIDS = true;
 		boolean doAStar = true;
 
-		char[][] InitialState = {
-								{' ', ' ', ' ', ' '},
-								{' ', ' ', ' ', ' '},
-								{' ', ' ', ' ', ' '},
-								{'A', 'B', 'C', '@'}};
-		
-		char[][] FinalState = {
-								{' ', ' ', ' ', ' '},
-								{' ', 'A', ' ', ' '},
-								{' ', 'B', ' ', ' '},
-								{' ', 'C', ' ', ' '}};
+		int problemNum = 1;
 
-		BlocksWorld b = new BlocksWorld(InitialState, FinalState);
+		char[][] initialState = null;
+		char[][] finalState = null;
+
+		if(problemNum == 1) {
+			initialState = new char[][] {
+				{' ', ' ', ' ', ' '},
+				{' ', ' ', ' ', ' '},
+				{' ', ' ', ' ', ' '},
+				{'A', 'B', 'C', '@'}};
+
+			finalState = new char[][] {
+				{' ', ' ', ' ', ' '},
+				{' ', 'A', ' ', ' '},
+				{' ', 'B', ' ', ' '},
+				{' ', 'C', ' ', ' '}};
+		}
+		else if(problemNum == 2) {
+			initialState = new char[][] {
+				{'A', ' ', ' '},
+				{' ', ' ', ' '},
+				{' ', ' ', '@'}};
+
+			finalState = new char[][] {
+				{' ', ' ', ' '},
+				{' ', ' ', ' '},
+				{' ', ' ', 'A'}};
+		}
+		else if(problemNum == 3) {
+			initialState = new char[][] {
+				{'A', ' ', ' '},
+				{' ', '@', ' '},
+				{' ', ' ', 'B'}};
+
+			finalState = new char[][] {
+				{'B', ' ', ' '},
+				{' ', ' ', ' '},
+				{' ', ' ', 'A'}};
+		}
+		else if(problemNum == 4) {
+			initialState = new char[][] {
+				{'A', ' '},
+				{' ', '@'}};
+
+			finalState = new char[][] {
+				{' ', ' '},
+				{' ', 'A'}};
+		}
+		else if(problemNum == 5) {
+			initialState = new char[][] {
+				{'A', ' ', ' '},
+				{' ', ' ', ' '},
+				{' ', ' ', '@'}};
+
+			finalState = new char[][] {
+				{' ', ' ', ' '},
+				{' ', ' ', ' '},
+				{' ', ' ', 'A'}};
+		}
+		else if(problemNum == 6) {
+			initialState = new char[][] {
+				{'A', ' ', ' ', ' '},
+				{' ', ' ', ' ', ' '},
+				{' ', ' ', ' ', ' '},
+				{' ', ' ', ' ', '@'}};
+
+			finalState = new char[][] {
+				{' ', ' ', ' ', ' '},
+				{' ', ' ', ' ', ' '},
+				{' ', ' ', ' ', ' '},
+				{' ', ' ', ' ', 'A'}};
+		}
+		else if(problemNum == 7) {
+			initialState = new char[][] {
+				{'A', ' ', ' ', ' ', ' '},
+				{' ', ' ', ' ', ' ', ' '},
+				{' ', ' ', ' ', ' ', ' '},
+				{' ', ' ', ' ', ' ', ' '},
+				{' ', ' ', ' ', ' ', '@'}};
+
+			finalState = new char[][] {
+				{' ', ' ', ' ', ' ', ' '},
+				{' ', ' ', ' ', ' ', ' '},
+				{' ', ' ', ' ', ' ', ' '},
+				{' ', ' ', ' ', ' ', ' '},
+				{' ', ' ', ' ', ' ', 'A'}};
+		} else {
+			throw new Error("Invalid Problem Selected");
+		}
+
+		BlocksWorld b = new BlocksWorld(initialState, finalState);
 		String solution;
 
 		b.resetBoard();
 		
 		if(doBFS) {
 			try {
-				System.out.println("Breadth First");
+				System.out.println("Breadth First Output");
 				BreadthSearch bfs = new BreadthSearch();
 
 				long currentTime = System.currentTimeMillis();
@@ -38,7 +117,7 @@ public class Tester {
 				long finishTime = System.currentTimeMillis();
 
 				b.printBoard();
-				System.out.println("Solution: \"" + solution + "\", \nTime Taken: " + (finishTime - currentTime) + " ms,\nNodes Expanded: " + bfs.getNumNodesExpanded());
+				System.out.println("Solution: \"" + solution + "\", \nTime Taken: " + (finishTime - currentTime) + " ms,\nNodes Examined: " + bfs.getNumNodesTested() +",\nMax Number of Nodes Stored: " + bfs.getMaxNumNodesStored());
 			} catch (OutOfMemoryError e) {
 				System.out.println(e.toString());
 			}
@@ -46,7 +125,7 @@ public class Tester {
 
 		if(doDFS) {
 			try {
-				System.out.println("Depth First");
+				System.out.println("Depth First Output");
 				DepthSearch dfs = new DepthSearch();
 
 				long currentTime = System.currentTimeMillis();
@@ -54,14 +133,14 @@ public class Tester {
 				long finishTime = System.currentTimeMillis();
 
 				b.printBoard();
-				System.out.println("Solution: \"" + solution + "\", \nTime Taken: " + (finishTime - currentTime) + " ms,\nNodes Expanded: " + dfs.getNumNodesExpanded());
+				System.out.println("Solution Length: " + solution.length() + " characters, \nTime Taken: " + (finishTime - currentTime) + " ms,\nNodes Examined: " + dfs.getNumNodesTested() +",\nMax Number of Nodes Stored: " + dfs.getMaxNumNodesStored());
 			} catch (OutOfMemoryError e) {
 				System.out.println(e.toString());
 			}
 		}
 
 		if(doIDS) {
-			System.out.println("Iterative Deepening Search");
+			System.out.println("Iterative Deepening Search Output");
 			IterativeDeepeningSearch ids = new IterativeDeepeningSearch();
 
 			long currentTime = System.currentTimeMillis();
@@ -69,11 +148,11 @@ public class Tester {
 			long finishTime = System.currentTimeMillis();
 
 			b.printBoard();
-			System.out.println("Solution: \"" + solution + "\", \nTime Taken: " + (finishTime - currentTime) + " ms,\nNodes Expanded: " + ids.getNumNodesExpanded());
+			System.out.println("Solution: \"" + solution + "\", \nTime Taken: " + (finishTime - currentTime) + " ms,\nNodes Examined: " + ids.getNumNodesTested()  +",\nMax Number of Nodes Stored: " + ids.getMaxNumNodesStored());
 		}
 
 		if(doAStar) {
-			System.out.println("A* Search");
+			System.out.println("A* Search Output");
 			AStarSearch ass = new AStarSearch(); 
 
 			long currentTime = System.currentTimeMillis();
@@ -81,7 +160,7 @@ public class Tester {
 			long finishTime = System.currentTimeMillis();
 
 			b.printBoard();
-			System.out.println("Solution: \"" + solution + "\", \nTime Taken: " + (finishTime - currentTime) + " ms,\nNodes Expanded: " + ass.getNumNodesExpanded());
+			System.out.println("Solution: \"" + solution + "\", \nTime Taken: " + (finishTime - currentTime) + " ms,\nNodes Examined: " + ass.getNumNodesTested()  +",\nMax Number of Nodes Stored: " + ass.getMaxNumNodesStored());
 		}
 	}
 

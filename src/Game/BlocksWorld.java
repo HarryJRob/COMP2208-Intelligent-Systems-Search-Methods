@@ -57,37 +57,65 @@ public class BlocksWorld {
 	}
 	
 	public boolean moveUp() {
-		if(agentY != 0) {
+		if(canMoveUp()) {
 			swapChars(agentX, agentY-1);
 			return true;
 		}
 		return false;
 	}
 	
+	public boolean canMoveUp() {
+		if(agentY != 0) {
+			return true;
+		}
+		return false;
+	}
+
 	public boolean moveRight() {
-		if(agentX != size-1) {
+		if(canMoveRight()) {
 			swapChars(agentX+1, agentY);
 			return true;
 		}
 		return false;
 	}
 	
+	public boolean canMoveRight() {
+		if(agentX != size-1) {
+			return true;
+		}
+		return false;
+	}
+
 	public boolean moveDown() {
-		if(agentY != size-1) {
+		if(canMoveDown()) {
 			swapChars(agentX, agentY+1);
 			return true;
 		}
 		return false;
 	}
 	
+	public boolean canMoveDown() {
+		if(agentY != size-1) {
+			return true;
+		}
+		return false;
+	}
+
 	public boolean moveLeft() {
-		if(agentX != 0) {
+		if(canMoveLeft()) {
 			swapChars(agentX-1, agentY);
 			return true;
 		}
 		return false;
 	}
 	
+	public boolean canMoveLeft() {
+		if(agentX != 0) {
+			return true;
+		}
+		return false;
+	}
+
 	public void printBoard() {
 		for(int y = 0; y < size; y++) {
 			for(int x = 0; x < size; x++) {

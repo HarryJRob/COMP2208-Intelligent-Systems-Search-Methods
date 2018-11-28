@@ -15,6 +15,10 @@ public class AStarSearch extends Search {
         toExpand.add(new Node("", 0));
 
         while(toExpand.size() != 0) {
+            if(toExpand.size() > mostNodesStored) {
+                mostNodesStored = toExpand.size();
+            }
+
             Node curNode = toExpand.poll();
 
             if(playGame(b, curNode.getValue())) {
@@ -40,7 +44,7 @@ public class AStarSearch extends Search {
     }
 
     private int calcAproxDistanceToEnd(BlocksWorld b, String moves) {
-            playGame(b, moves);
+            //playGame(b, moves);
             char[][] currentBoard = b.getBoard();
 
             List<Block> currentBlockLocations = new LinkedList<Block>();

@@ -13,9 +13,15 @@ public class DepthSearch extends Search {
         toExpand.add("");
 
         while(toExpand.size() != 0) {
+            if(toExpand.size() > mostNodesStored) {
+                mostNodesStored = toExpand.size();
+            }
+
             String curNode = toExpand.pop();
+
             if(playGame(b, curNode)) {
                 return curNode;
+                
             } else {
                 List<String> nodes = getPossibleMoves(b,curNode);
                 Collections.shuffle(nodes);

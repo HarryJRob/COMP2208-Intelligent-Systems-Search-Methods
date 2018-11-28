@@ -5,11 +5,14 @@ import java.util.LinkedList;
 
 public abstract class Search {
 
-    private int numberOfNodesExpanded = 0; 
+    private int numberOfNodesTested = 0; 
+    protected int mostNodesStored = 0;
 
     public abstract String solveBlocksWorld(BlocksWorld b);
 
-    protected static boolean playGame(BlocksWorld b, String moves) {
+    protected boolean playGame(BlocksWorld b, String moves) {
+        numberOfNodesTested++;
+
         b.resetBoard();
         for(char c : moves.toCharArray()) {
             switch (c) {
@@ -31,39 +34,40 @@ public abstract class Search {
         return b.isComplete();
     }
 
-    protected List<String> getPossibleMoves(BlocksWorld b, String curMoves) {
-        numberOfNodesExpanded++;
-
+    protected static List<String> getPossibleMoves(BlocksWorld b, String curMoves) {
         char[][] board = b.getBoard();
         int agentX = b.getAgentX();
         int agentY = b.getAgentY();
         List<String> returnList = new LinkedList<String>();
 
         //Up
-        if(agentY != 0) {
+        if(b.canMoveUp()) {
             returnList.add(curMoves + "w");
         }
         
         //Left
-        if(agentX != 0) {
+        if(b.canMoveLeft()) {
             returnList.add(curMoves + "a");
         }
 
         //Down
-        if(agentY != board.length-1) {
+        if(b.canMoveDown()) {
             returnList.add(curMoves + "s");
         }
 
         //Right
-        if(agentX != board.length-1) {
+        if(b.canMoveRight()) {
             returnList.add(curMoves + "d");
         }
         
         return returnList;
     }
 
-    public int getNumNodesExpanded() {
-        return numberOfNodesExpanded;
+    public int getNumNodesTested() {
+        return numberOfNodesTested;
     }
 
+    public int getMaxNumNodesStored() {
+        return mostNodesStored;
+    }
 }
