@@ -35,28 +35,25 @@ public abstract class Search {
     }
 
     protected static List<String> getPossibleMoves(BlocksWorld b, String curMoves) {
-        char[][] board = b.getBoard();
-        int agentX = b.getAgentX();
-        int agentY = b.getAgentY();
         List<String> returnList = new LinkedList<String>();
 
         //Up
-        if(b.canMoveUp()) {
+        if(b.canMoveUp() && (curMoves.length() == 0 || curMoves.charAt(curMoves.length()-1) != 's')) {
             returnList.add(curMoves + "w");
         }
         
         //Left
-        if(b.canMoveLeft()) {
+        if(b.canMoveLeft() && (curMoves.length() == 0 || curMoves.charAt(curMoves.length()-1) != 'd')) {
             returnList.add(curMoves + "a");
         }
 
         //Down
-        if(b.canMoveDown()) {
+        if(b.canMoveDown() && (curMoves.length() == 0 || curMoves.charAt(curMoves.length()-1) != 'w')) {
             returnList.add(curMoves + "s");
         }
 
         //Right
-        if(b.canMoveRight()) {
+        if(b.canMoveRight() && (curMoves.length() == 0 || curMoves.charAt(curMoves.length()-1) != 'a')) {
             returnList.add(curMoves + "d");
         }
         

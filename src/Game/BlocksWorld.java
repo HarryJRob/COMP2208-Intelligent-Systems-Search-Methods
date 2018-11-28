@@ -6,6 +6,7 @@ import java.util.List;
 public class BlocksWorld {
 
 	public final char AGENT_REPRESENTATION = '@';
+	public final char IMMOVABLE_TILE_REPRESENTATION = '#';
 	
 	private final int size;
 	private final char[][] initialBoard;
@@ -29,7 +30,7 @@ public class BlocksWorld {
 		this.endBlockLocations = new LinkedList<Block>();
 		for(int y = 0; y < this.size; y++) {
 			for(int x = 0; x < this.size; x++) {
-				if(this.solution[y][x] != ' ' && this.solution[y][x] != AGENT_REPRESENTATION) {
+				if(this.solution[y][x] != ' ' && this.solution[y][x] != AGENT_REPRESENTATION && this.solution[y][x] != IMMOVABLE_TILE_REPRESENTATION) {
 					endBlockLocations.add(new Block(x,y,this.solution[y][x]));
 				}
 			}
@@ -65,7 +66,7 @@ public class BlocksWorld {
 	}
 	
 	public boolean canMoveUp() {
-		if(agentY != 0) {
+		if(agentY != 0 && board[agentY-1][agentX] != IMMOVABLE_TILE_REPRESENTATION) {
 			return true;
 		}
 		return false;
@@ -80,7 +81,7 @@ public class BlocksWorld {
 	}
 	
 	public boolean canMoveRight() {
-		if(agentX != size-1) {
+		if(agentX != size-1 && board[agentY][agentX+1] != IMMOVABLE_TILE_REPRESENTATION) {
 			return true;
 		}
 		return false;
@@ -95,7 +96,7 @@ public class BlocksWorld {
 	}
 	
 	public boolean canMoveDown() {
-		if(agentY != size-1) {
+		if(agentY != size-1 && board[agentY+1][agentX] != IMMOVABLE_TILE_REPRESENTATION) {
 			return true;
 		}
 		return false;
@@ -110,7 +111,7 @@ public class BlocksWorld {
 	}
 	
 	public boolean canMoveLeft() {
-		if(agentX != 0) {
+		if(agentX != 0 && board[agentY][agentX-1] != IMMOVABLE_TILE_REPRESENTATION) {
 			return true;
 		}
 		return false;

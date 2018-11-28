@@ -11,7 +11,7 @@ public class Tester {
 		boolean doIDS = true;
 		boolean doAStar = true;
 
-		int problemNum = 1;
+		int problemNum = 8;
 
 		char[][] initialState = null;
 		char[][] finalState = null;
@@ -98,6 +98,17 @@ public class Tester {
 				{' ', ' ', ' ', ' ', ' '},
 				{' ', ' ', ' ', ' ', ' '},
 				{' ', ' ', ' ', ' ', 'A'}};
+		}
+		else if(problemNum == 8) {
+			initialState = new char[][] {
+				{'A', ' ', ' '},
+				{' ', '#', ' '},
+				{' ', ' ', '@'}};
+
+			finalState = new char[][] {
+				{' ', ' ', ' '},
+				{' ', '#', ' '},
+				{' ', ' ', 'A'}};
 		} else {
 			throw new Error("Invalid Problem Selected");
 		}
